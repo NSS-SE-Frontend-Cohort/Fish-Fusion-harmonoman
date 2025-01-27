@@ -14,6 +14,7 @@ const mongerInventory = (chefBudget) => {
     const chefArray = [];
     for (const item of mongerArray) {
         if (item.price <= chefBudget) {
+            item.amount = Math.floor(item.amount * 0.5);
             chefArray.push(item);
         }
     }
