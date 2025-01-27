@@ -2,22 +2,14 @@ const { boatInventory } = require("./fishingBoat.js");
 
 const mongerInventory = (chefBudget) => {
     // Monger filter
-    const mongerArray = [];
     const todaysCatch = boatInventory();
-    for (const fish of todaysCatch) {
-        if (fish.amount >= 10 && fish.price <= 7.50) {
-            mongerArray.push(fish);
-        }
-    }
+    const mongerArray = todaysCatch.filter(fish => fish.amount >= 10 && fish.price <= 7.50);
 
     // Chef filter
-    const chefArray = [];
-    for (const item of mongerArray) {
-        if (item.price <= chefBudget) {
-            item.amount = Math.floor(item.amount * 0.5);
-            chefArray.push(item);
-        }
-    }
+    const chefArray = mongerArray
+        .filter(item => item.price <= chefBudget)
+        .map(item => ({ ...item, amount: Math.floor(item.amount * 0.5) }));
+
 
     return chefArray;
 }
